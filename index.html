@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💝 발렌타인데이 - 두쫀쿠 챌린지</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Falling Hearts Background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- STEP 1: Start Page -->
+    <section class="page active" id="startPage">
+      <div class="card start-card">
+        <h1 class="main-title">💕 발렌타인데이 💕</h1>
+        <h2 class="sub-title-date">(워노원 입대 4주년)</h2>
+        <p class="description">
+          문제를 다 맞히면 <strong>'두쫀쿠 전용 쿠폰'</strong>을 드립니다.
+        </p>
+
+        <div class="images-container">
+          <div class="image-wrapper bouquet-wrapper">
+            <img src="꽃다발.png" alt="꽃다발" class="bouquet-img" />
+            <div class="arrow-label">
+              <span class="arrow">↓</span>
+              <span class="label-text">희진이?</span>
+            </div>
+          </div>
+          <div class="image-wrapper">
+            <img src="두쫜쿠.png" alt="두쫀쿠" class="dujjeonku-img" />
+          </div>
+        </div>
+
+        <button class="btn btn-start" onclick="startQuiz()">
+          💖 시작하기 💖
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: Quiz Page -->
+    <section class="page" id="quizPage">
+      <div class="card quiz-card envelope-style">
+        <div class="quiz-progress">
+          <span id="currentQuestion">1</span> /
+          <span id="totalQuestions">6</span>
+        </div>
+        <h2 class="quiz-title">🍫 밸런스 게임 🍫</h2>
+        <p class="quiz-question" id="questionText"></p>
+
+        <div class="options-container">
+          <button
+            class="btn btn-option escaping-btn"
+            id="option1"
+            onmouseenter="tryEscape(this, 1)"
+            onclick="selectAnswer(1)"
+          >
+            <span id="option1Text"></span>
+          </button>
+          <span class="vs-text">VS</span>
+          <button
+            class="btn btn-option escaping-btn"
+            id="option2"
+            onmouseenter="tryEscape(this, 2)"
+            onclick="selectAnswer(2)"
+          >
+            <span id="option2Text"></span>
+          </button>
+        </div>
+
+        <div class="tooltip" id="escapingTooltip">
+          진심이야? 우리 사랑이 이거밖에 안 돼?
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3: Fail Page -->
+    <section class="page" id="failPage">
+      <div class="card fail-card yandere-style">
+        <div class="yandere-text-container">
+          <p class="yandere-text">나에 대한 관심이 이거 밖에 안돼?</p>
+          <p class="yandere-text">나에 대한 관심이 이거 밖에 안돼?</p>
+          <p class="yandere-text">나에 대한 관심이 이거 밖에 안돼?</p>
+          <p class="yandere-text">나에 대한 관심이 이거 밖에 안돼?</p>
+          <p class="yandere-text">나에 대한 관심이 이거 밖에 안돼?</p>
+        </div>
+
+        <img src="시무룩강아지.png" alt="시무룩 강아지" class="sad-dog-img" />
+
+        <div class="apology-section">
+          <p class="apology-instruction">
+            다시 도전하려면 아래 문장을 정확히 입력하세요:
+          </p>
+          <p class="apology-target">"나는 원호를 더 공부하겠습니다"</p>
+          <input
+            type="text"
+            id="apologyInput"
+            class="apology-input"
+            placeholder="여기에 입력하세요..."
+            oninput="checkApology()"
+          />
+          <button
+            class="btn btn-retry"
+            id="retryBtn"
+            disabled
+            onclick="restartQuiz()"
+          >
+            💔 Love Again 💔
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: Success Page -->
+    <section class="page" id="successPage">
+      <div class="card success-card">
+        <canvas id="confettiCanvas"></canvas>
+        <h1 class="yandere-success">이제 네 인생에 딴 놈은 없어 ㅎㅎ</h1>
+        <p class="success-subtitle">
+          축하해! 드디어 보상을 획득했어.<br />3개의 상자 중 진짜 '두쫀쿠
+          쿠폰'이 든 상자를 찾아봐!
+        </p>
+
+        <div class="random-boxes" id="randomBoxes">
+          <div
+            class="random-box"
+            id="box1"
+            onmouseenter="boxEscape(1)"
+            ontouchstart="boxEscape(1)"
+            onclick="openBox(1)"
+          >
+            <span class="box-emoji">🎁</span>
+          </div>
+          <div
+            class="random-box"
+            id="box2"
+            onmouseenter="boxEscape(2)"
+            ontouchstart="boxEscape(2)"
+            onclick="openBox(2)"
+          >
+            <span class="box-emoji">🎁</span>
+          </div>
+          <div
+            class="random-box"
+            id="box3"
+            onmouseenter="boxEscape(3)"
+            ontouchstart="boxEscape(3)"
+            onclick="openBox(3)"
+          >
+            <span class="box-emoji">🎁</span>
+          </div>
+        </div>
+
+        <p class="escape-message" id="escapeMessage"></p>
+      </div>
+    </section>
+
+    <!-- STEP 5: Final Coupon Page -->
+    <section class="page" id="couponPage">
+      <div class="card coupon-card">
+        <canvas id="finalConfetti"></canvas>
+        <h1 class="coupon-title">🎉 축하합니다! 🎉</h1>
+        <div class="coupon">
+          <div class="coupon-inner">
+            <div class="coupon-header">💝 두쫀쿠 발렌타인 한정판 쿠폰 💝</div>
+            <div class="coupon-body">
+              <img src="두쫜쿠.png" alt="두쫀쿠" class="coupon-img" />
+              <p class="coupon-text">
+                이 쿠폰을 가진 희진이에게<br /><strong>두쫀쿠 사주기</strong>
+                약속~
+              </p>
+              <p class="coupon-date">유효기간: 영원히 ♾️</p>
+            </div>
+            <div class="coupon-footer">⭐ VIP ONLY ⭐</div>
+          </div>
+        </div>
+        <p class="final-message">사랑해 희진아 💕</p>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
